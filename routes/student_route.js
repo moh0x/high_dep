@@ -1,0 +1,10 @@
+const express = require('express')
+const { body } = require('express-validator')
+const router = express.Router()
+const studentController = require('../controller/student_controller')
+const {verifyToken} = require('../utility/verifyToken')
+const {verifyAdmin} = require('../utility/verify_role_admin')
+router.post('/signup',body("email").isLength({min:8,max:50}).withMessage("typr valid email"),body('password').isLength({min:8,max:50}).withMessage('type valid password'),studentController.signUp)
+router.post('/login',body("email").isNumeric().isLength({min:8,max:50}).withMessage("type valid email"),body('password').isLength({min:8,max:50}).withMessage('type valid password'),studentController.login)
+router.get('/info',studentController.studentInfo)
+module.exports = router
