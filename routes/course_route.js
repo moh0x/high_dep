@@ -11,5 +11,5 @@ router.post('/add',verifyToken,verifyAdmin,courseController.addCourse)
 router.put('/start',verifyToken,courseController.startCourse)
 router.put('/finish',verifyToken,courseController.finishCourse)
 router.get('/courses/admin',verifyToken,verifyAdmin,courseController.coursesAdmin)
-router.get('/courses/user',verifyToken,verifyAdmin,courseController.courseOneUser)
+router.post('/courses/user',verifyToken,verifyAdmin,courseController.courseOneUser)
 module.exports = router
