@@ -7,7 +7,7 @@ const { Payment } = require('../model/payments_model')
 const { User } = require('../model/auth_user')
 const cloudinary=require( "cloudinary").v2;
 const admin = require("firebase-admin");
-const serviceAccount = require("../utility/cli2-19164-firebase-adminsdk-fbsvc-4f856afab6.json");
+const serviceAccount = require("../utility/cli2-19164-firebase-adminsdk-fbsvc-e534bb8a42.json");
 
 
 
