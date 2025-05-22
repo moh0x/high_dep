@@ -17,4 +17,5 @@ router.put('/inActive',verifyToken,verifyAdmin,authController.inActiveUser)
 router.post('/ban',verifyToken,verifyAdmin,authController.ban)
 router.post('/disBan',verifyToken,verifyAdmin,authController.disBan)
 router.put('/status',verifyToken,authController.changeUserStates)
+router.delete('/delete',verifyToken,authController.deleteUser)
 module.exports = router
