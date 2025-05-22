@@ -229,7 +229,7 @@ const activeUser = async(req,res)=>{
     const token = req.headers.token;
     const adminTrue = await Admin.findOne({token:token})
     const{_id}=req.body._id;
-       const inActiveUser = await User.findOne({id:_id})
+       const inActiveUser = await User.findOne({_id:_id})
      if (!inActiveUser) {
     return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
      }
