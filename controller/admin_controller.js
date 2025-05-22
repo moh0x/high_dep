@@ -156,7 +156,7 @@ const getStatics = async (req,res)=>{
     const adminTrue = await Admin.findOne({token:token})
   
        const activeUsers = await User.find({isVerified:true,isBanned:false}).sort({createdAt:-1})
-       const inActiveUsers = await User.find({or:{isVerified:false,isBanned:true}}).sort({createdAt:-1})
+              const inActiveUsers = await User.find({$or:[{isVerified:false},{isBanned:true}]}).sort({createdAt:-1})
        const complteCourses = await Course.find({isFinished:true}).sort({createdAt:-1})
        const inComplteCourses = await Course.find({isFinished:false}).sort({createdAt:-1})
        const completPayments = await Payment.find({status:"finish"}).sort({createdAt:-1})
