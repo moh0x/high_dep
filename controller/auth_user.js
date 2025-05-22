@@ -240,7 +240,7 @@ const activeUser = async(req,res)=>{
         banned:null
       }
      })
-     await inActiveUser.save();
+     await sec.save();
        const retUser = await User.findOne({id:_id})
        res.status(200).json({"status":httpStatus.SUCCESS,"data":retUser});
 
