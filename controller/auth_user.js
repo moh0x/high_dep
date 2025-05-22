@@ -226,22 +226,22 @@ const getInActiveUsers = async(req,res)=>{
 }
 const activeUser = async(req,res)=>{
   try {
-    const token = req.headers.token;
-    const adminTrue = await Admin.findOne({token:token})
-    const{_id}=req.body._id;
-       const sec = await User.findOne({id:_id})
-     if (!sec) {
+    const _id=req.body._id;
+       const inActiveUser = await User.findOne({_id:_id})
+       console.log(inActiveUser);
+       
+     if (!inActiveUser) {
     return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
      }
-     await User.findByIdAndUpdate(sec.id,{
+     await User.findByIdAndUpdate(inActiveUser.id,{
       $set:{
         isVerified:true,
         isBanned:false,
         banned:null
       }
      })
-     await sec.save();
-       const retUser = await User.findOne({id:_id})
+     await inActiveUser.save();
+       const retUser = await User.findOne({_id:_id})
        res.status(200).json({"status":httpStatus.SUCCESS,"data":retUser});
 
   } catch (error) {
