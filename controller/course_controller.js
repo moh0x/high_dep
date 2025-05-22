@@ -8,9 +8,15 @@ const cloudinary=require( "cloudinary").v2;
 const admin = require("firebase-admin");
 const serviceAccount = require("../utility/cli2-19164-firebase-adminsdk-fbsvc-e534bb8a42.json");
 
+require('dotenv').config();
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert({
+    projectId: process.env.FB_PROJECT_ID,
+    clientEmail: process.env.FB_CLIENT_EMAIL,
+    privateKey: process.env.FB_PRIVATE_KEY.replace(/\\n/g, '\n'),
+  }),
 });
+
 
 async function sendNotification(title, body, token) {
   const message = {
