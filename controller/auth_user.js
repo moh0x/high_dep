@@ -229,11 +229,11 @@ const activeUser = async(req,res)=>{
     const token = req.headers.token;
     const adminTrue = await Admin.findOne({token:token})
     const{_id}=req.body._id;
-       const inActiveUser = await User.findOne({_id:_id})
-     if (!inActiveUser) {
+       const sec = await User.findOne({id:_id})
+     if (!sec) {
     return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"there is no user with this id" });
      }
-     await User.findByIdAndUpdate(inActiveUser.id,{
+     await User.findByIdAndUpdate(sec.id,{
       $set:{
         isVerified:true,
         isBanned:false,
