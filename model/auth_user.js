@@ -86,8 +86,14 @@ const userSchema = new mongoose.Schema(
 		earnOneMonth:{
 			type:String,
 			default:0
-		}
+		},
+		matricule:{
+			type:String,
 	},
+		date:{
+			type:String
+		},
+	
 	{ timestamps: true }
 );
 
