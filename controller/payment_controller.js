@@ -8,13 +8,7 @@ const { User } = require('../model/auth_user')
 const cloudinary=require( "cloudinary").v2;
 const admin = require('firebase-admin');
 
-admin.initializeApp({
-  credential: admin.credential.cert({
-    projectId: process.env.FB_PROJECT_ID,
-    clientEmail: process.env.FB_CLIENT_EMAIL,
-    privateKey: process.env.FB_PRIVATE_KEY.replace(/\\n/g, '\n'),
-  }),
-});
+
 const serviceAccount = require("../utility/cli2-19164-firebase-adminsdk-fbsvc-e534bb8a42.json");
 
 
