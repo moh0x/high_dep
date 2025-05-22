@@ -92,7 +92,7 @@ const userSchema = new mongoose.Schema(
 	},
 		date:{
 			type:String
-		},
+		},},
 	
 	{ timestamps: true }
 );
