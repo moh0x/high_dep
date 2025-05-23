@@ -92,7 +92,14 @@ const userSchema = new mongoose.Schema(
 	},
 		date:{
 			type:String
-		},},
+		},
+		baladiya:{
+			type:String
+		},
+		onwan:{
+			type:String
+		},
+	},
 	
 	{ timestamps: true }
 );
