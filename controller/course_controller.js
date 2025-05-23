@@ -152,7 +152,6 @@ const finishCourse =  async (req, res) => {
       dateEndJourney:Date.now(),
       kilomitragePaid:kilomitragePaid,
       cartGrisImage:cartGrisImage,
-      priceParKilomitre:priceParKilomitre,
       isFinished:true,
       kilomitrageBefore:kilomitrageBefore
     }
