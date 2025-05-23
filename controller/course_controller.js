@@ -49,7 +49,7 @@ const deleteCourse =  async (req, res) => {
 };
 const addCourse =  async (req, res) => {
 	try {
-    const{userId,Destination,Depart,assurance,kilomitrage,marque,matricule}=req.body
+    const{userId,Destination,Depart,assurance,kilomitrage,marque,matricule,priceParKilomitre}=req.body
     const user = await User.findOne({_id:userId});
     const course = new Course({
       userId:userId,
@@ -60,7 +60,8 @@ const addCourse =  async (req, res) => {
       phoneNumber:user.phoneNumber,
       marque:marque,
       chauferName:user.fullname,
-      matricule:matricule
+      matricule:matricule,
+      priceParKilomitre:priceParKilomitre
     })       
 
   await course.save();
@@ -134,7 +135,7 @@ const startCourse =  async (req, res) => {
 };
 const finishCourse =  async (req, res) => {
 	try {
-    const{longtitudeEnd,latitudeEnd,courseId,kilomitragePaid,profilePic,priceParKilomitre}=req.body;
+    const{longtitudeEnd,latitudeEnd,courseId,kilomitragePaid,cartGrisImage,kilomitrageBefore}=req.body;
     const token = req.headers.token;
     const user = await User.findOne({token:token})
    const course = await Course.findById(courseId);
@@ -152,7 +153,8 @@ const finishCourse =  async (req, res) => {
       kilomitragePaid:kilomitragePaid,
       cartGrisImage:cartGrisImage,
       priceParKilomitre:priceParKilomitre,
-      isFinished:true
+      isFinished:true,
+      kilomitrageBefore:kilomitrageBefore
     }
    })
    await User.findByIdAndUpdate(user._id,{
