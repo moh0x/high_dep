@@ -83,6 +83,10 @@ const userSchema = new mongoose.Schema(
 			type:String,
 			default:0
 		},
+		tax:{
+			type:String,
+			default:0
+		},
 		earnOneMonth:{
 			type:String,
 			default:0
