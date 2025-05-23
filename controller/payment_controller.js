@@ -6,10 +6,8 @@ const { Course } = require('../model/course_controller')
 const { Payment } = require('../model/payments_model')
 const { User } = require('../model/auth_user')
 const cloudinary=require( "cloudinary").v2;
-const admin = require('firebase-admin');
-
-
-const serviceAccount = require("../utility/cli2-19164-firebase-adminsdk-fbsvc-e534bb8a42.json");
+const admin = require("firebase-admin");
+// const serviceAccount = require("../utility/cli2-19164-firebase-adminsdk-fbsvc-e534bb8a42.json");
 
 
 
@@ -39,6 +37,7 @@ const addPayment =  async (req, res) => {
       numberOfCourses:courses.length,
       chauferPay:user.earnOneMonth,
       chauferName:user.fullname,
+      tax:user.tax
     })       
     for (let index = 0; index < courses.length; index++) {
         await Course.findByIdAndUpdate(courses[index].id,{
@@ -52,7 +51,8 @@ const addPayment =  async (req, res) => {
    const retUser = await User.findByIdAndUpdate(user.id,{
       $set:{
         earnOneDay:0,
-        earnOneMonth:0
+        earnOneMonth:0,
+        tax:0
       }
     })
     await retUser.save();
@@ -71,11 +71,30 @@ const addPaymentDaily =  async (req, res) => {
         
     const{userId,earnOneDay}=req.body
     const user = await User.findOne({_id:userId}); 
-    const   earnOneMonth = +earnOneDay + +user.earnOneMonth 
+    const   earnOneMonth = user.earnOneMonth != null || user.earnOneMonth != undefined || isNaN(user.earnOneMonth) == false? +earnOneDay + +user.earnOneMonth : +earnOneDay + 0
    const retUser = await User.findByIdAndUpdate(user.id,{
       $set:{
         earnOneDay:earnOneDay,
         earnOneMonth:earnOneMonth
+      }
+    })
+    await retUser.save();
+  res.status(200).json({"status":httpStatus.SUCCESS,"data":user})  
+    } catch (error) {
+        console.log(error);
+        
+        console.log("Error in logout controller", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+const addTax =  async (req, res) => {
+    try {
+        
+    const{userId,tax}=req.body
+    const user = await User.findOne({_id:userId}); 
+   const retUser = await User.findByIdAndUpdate(user.id,{
+      $set:{
+        tax:tax
       }
     })
     await retUser.save();
@@ -205,4 +224,4 @@ if (!user) {
 const payments = await Payment.find({userId:user.id})
 res.status(200).json({"status":httpStatus.SUCCESS,"data":payments})
 }
-module.exports = {addPayment,paymentOneUser,paymentsAdmin,payments,addPaymentDaily}
+module.exports = {addPayment,paymentOneUser,paymentsAdmin,payments,addPaymentDaily,addTax}
