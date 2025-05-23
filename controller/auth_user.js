@@ -85,7 +85,7 @@ const signUp =async(req,res)=>{
         if (!valid.isEmpty()) {
           return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":valid['errors'][0].msg});
         }
-        const {fullname,password,phoneNumber,cartGris,permis,drivingLicence,chaque,isAssurance,matricule,addresse,date} = req.body      
+        const {fullname,password,phoneNumber,cartGris,permis,drivingLicence,chaque,isAssurance,matricule,addresse,date,baladiya,onwan} = req.body      
         const user = await User.findOne({phoneNumber:phoneNumber});
         if (user) {
           return  res.status(400).json({"status":httpStatus.FAIL,"data":null,"message":"user already exist"})
@@ -106,7 +106,9 @@ const signUp =async(req,res)=>{
             isAssurance:isAssurance,
 		matricule:matricule,
 		city:addresse,
-		date:date
+		date:date,
+    baladiya:baladiya,
+    onwan:onwan
         })
         await newUser.save()  
               res.status(200).json({"status":httpStatus.SUCCESS,"data":newUser})     
@@ -159,7 +161,7 @@ const updateProfile =  async (req, res) => {
 	try {
 		const token = req.headers.token;
     const user = await User.findOne({token:token},{password:false})
-    const{logtitude,latitude,isOnline,status,email,isAssurance,city,fullname,date,matricule} = req.body
+    const{logtitude,latitude,isOnline,status,email,isAssurance,city,fullname,date,matricule,baladiya,onwan} = req.body
   await User.findByIdAndUpdate(user._id,{ 
     $set:{
       logtitude:logtitude,
@@ -171,7 +173,9 @@ const updateProfile =  async (req, res) => {
       city:city ?? user.city,
       fullname:fullname ?? user.fullname,
 	    date:date ??user.date,
-	    matricule:matricule ??user.matricule
+	    matricule:matricule ??user.matricule,
+      baladiya:baladiya ?? user.baladiya,
+      onwan:onwan ?? user.onwan
     }
   })
   await user.save()
@@ -214,6 +218,8 @@ const deleteUser = async (req,res)=>{
        await User.findByIdAndDelete(user._id); 
        res.status(200).json({"status":httpStatus.SUCCESS,"data":null });
   } catch (error) {
+    console.log(error);
+    
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
@@ -291,4 +297,5 @@ const inActiveUser = async(req,res)=>{
     res.status(500).json({ error: "Internal Server Error" });
   }
 }
+
 module.exports = {signUp,login,logout,updateProfile,userInfo,updateNotificationToken,deleteUser,getInActiveUsers,activeUser,getActiveUsers,inActiveUser,ban,disBan,changeUserStates}
