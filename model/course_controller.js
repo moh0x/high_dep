@@ -25,6 +25,9 @@ const courseSchema = new mongoose.Schema(
         priceTotal:{
             type:String,
         },
+        kilomitrageBefore:{
+            type:String,
+        },
         assurance:{
             type:String,
         },
