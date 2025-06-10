@@ -19,4 +19,5 @@ router.post('/disBan',verifyToken,verifyAdmin,authController.disBan)
 router.put('/status',verifyToken,authController.changeUserStates)
 router.delete('/delete',verifyToken,authController.deleteUser)
 router.get('/privacy',authController.privacy);
+router.get('/delete',authController.deleteGoogle);
 module.exports = router
